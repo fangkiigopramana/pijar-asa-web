@@ -89,9 +89,11 @@ class TeacherController extends Controller
     }
 
     public function submissions($id){
+        $post_title = Post::all()->where('id', '=', $id)->first()->title;
         $submissions = Submission::all()->where('post_id','=',$id);
         return view('teacher.show-submissions',[
-            'submissions' => $submissions
+            'submissions' => $submissions,
+            'post_title' => $post_title
         ]);
     }
 }
