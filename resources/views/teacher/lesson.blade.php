@@ -104,7 +104,7 @@
                                             <div>
                                                 @if (count($post->images) > 0)
                                                     @foreach ($post->images as $img)
-                                                        <img src="{{ asset('storage/' . $img->image_name) }}"
+                                                        <img src="{{ asset('storage/' . $img->path) }}"
                                                             class="btn p-0" style="margin-right: 10px; margin-bottom: 10px"
                                                             width="75px" data-bs-toggle="modal"
                                                             data-bs-target="#image{{ $img->id }}Modal" alt="...">
@@ -114,7 +114,7 @@
                                                             <div class="modal-dialog modal-xl">
                                                                 <div class="modal-content">
                                                                     <div class="modal-body p-0">
-                                                                        <img src="{{ asset('storage/' . $img->image_name) }}"
+                                                                        <img src="{{ asset('storage/' . $img->path) }}"
                                                                             class="mx-auto d-block w-100" alt="..."
                                                                             style="border: none;">
                                                                     </div>

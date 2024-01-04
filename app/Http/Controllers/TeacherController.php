@@ -114,7 +114,7 @@ class TeacherController extends Controller
                 $filePath = $file->store('post-images', 'public');
                 $postImg = new PostImage();
                 $postImg->post_id = $id;
-                $postImg->image_name = $filePath;
+                $postImg->path = $filePath;
                 $postImg->save();
             }
 
