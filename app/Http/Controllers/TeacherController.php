@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lesson;
 use App\Models\Post;
+use App\Models\PostImage;
 use App\Models\Submission;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,7 +29,8 @@ class TeacherController extends Controller
 
     public function dataLessons()
     {
-        $lessons = Lesson::orderByRaw("
+        $lessons = Auth::user()->lessons()
+            ->orderByRaw("
         CASE 
             WHEN day = 'Senin' THEN 1
             WHEN day = 'Selasa' THEN 2
@@ -38,9 +40,11 @@ class TeacherController extends Controller
             WHEN day = 'Sabtu' THEN 6
             WHEN day = 'Minggu' THEN 7
             ELSE 8
-        END, time")->get();
-        
-        return view('teacher.lessons')->with('lessons',$lessons);
+        END, time")
+            ->get();
+
+
+        return view('teacher.lessons')->with('lessons', $lessons);
     }
 
     public function createLesson(Request $request)
@@ -88,12 +92,35 @@ class TeacherController extends Controller
         ]);
     }
 
-    public function submissions($id){
+    public function submissions($id)
+    {
         $post_title = Post::all()->where('id', '=', $id)->first()->title;
-        $submissions = Submission::all()->where('post_id','=',$id);
-        return view('teacher.show-submissions',[
+        $submissions = Submission::all()->where('post_id', '=', $id);
+        return view('teacher.show-submissions', [
             'submissions' => $submissions,
             'post_title' => $post_title
         ]);
+    }
+
+    public function uploadImages(Request $request, $id)
+    {
+        $request->validate([
+            'files' => 'required|array',
+            'files.*' => 'image|mimes:jpeg,png,jpg,gif|max:10000'
+        ]);
+
+        if ($request->hasFile('files') && Post::find($id)) {
+            foreach ($request->file('files') as $file) {
+                $filePath = $file->store('post-images', 'public');
+                $postImg = new PostImage();
+                $postImg->post_id = $id;
+                $postImg->image_name = $filePath;
+                $postImg->save();
+            }
+
+            return redirect()->back()->with('upload-image-success', 'Yee, Foto berhasil ditambahkan!');
+        }
+
+        return redirect()->back();
     }
 }

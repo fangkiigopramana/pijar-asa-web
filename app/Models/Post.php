@@ -17,4 +17,8 @@ class Post extends Model
     public function submissions(){
         return $this->hasMany(Submission::class, 'id');
     }
+
+    public function images(){
+        return $this->hasMany(PostImage::class, 'post_id');
+    }
 }

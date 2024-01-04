@@ -3,8 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Models\PostImage;
 use App\Models\User;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,8 +54,10 @@ Route::middleware(['auth', 'check.role:pengajar'])->group(function () {
         Route::get('/data-lesson/{lesson:id}', 'detailLesson')->name('teacher.detail-lesson');
         Route::post('/posts/{lesson:id}', 'createPost')->name('teacher.create-post');
         Route::get('/submissions/post/{post:id}', 'submissions')->name('teacher.show-submission');
+        Route::post('/upload-image/{post:id}','uploadImages')->name('teacher.upload.image.activity');
     });
 });
+
 
 Route::get('/{any}', function(){
     return redirect()->route('auth.login');

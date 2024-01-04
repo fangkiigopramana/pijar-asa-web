@@ -93,7 +93,7 @@
                                 {{(Auth::user()->role === 'pengajar') ? $lesson->title : $lesson->lesson->title}}
                             </span>
                             <span class="d-block text-xs text-muted font-regular">
-                                {{(Auth::user()->role === 'pengajar') ? $lesson->description : $lesson->lesson->description}}
+                                {{substr(((Auth::user()->role === 'pengajar') ? $lesson->description : $lesson->lesson->description),0,7)}}
                             </span>
                         </div>
                     </a>
