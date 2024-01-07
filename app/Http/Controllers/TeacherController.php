@@ -64,7 +64,7 @@ class TeacherController extends Controller
         $lesson->code = substr(Str::random(5) . time(), 0, 5);
         $lesson->user_id = Auth::user()->id;
         $lesson->save();
-        return redirect()->back();
+        return redirect()->back()->with('create-lesson-success','Yee, berhasil menambahkan kelas!');
     }
     public function createPost($id, Request $request)
     {
@@ -81,7 +81,7 @@ class TeacherController extends Controller
         $post->description = $credentials['description'];
         $post->category = $credentials['category'];
         $post->save();
-        return redirect()->back();
+        return redirect()->back()->with('create-post-success','Yee, Postingan baru berhasil ditambahkan');
     }
 
     public function detailLesson($id)
@@ -114,7 +114,7 @@ class TeacherController extends Controller
                 $filePath = $file->store('post-images', 'public');
                 $postImg = new PostImage();
                 $postImg->post_id = $id;
-                $postImg->image_name = $filePath;
+                $postImg->path = $filePath;
                 $postImg->save();
             }
 

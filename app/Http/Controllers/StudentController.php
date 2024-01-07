@@ -86,9 +86,10 @@ class StudentController extends Controller
                 $newSubscribe->user_id = Auth::user()->id;
                 $newSubscribe->lesson_id = $lesson->id;
                 $newSubscribe->save();
+                return redirect()->back()->with('join-lesson-success', 'Yee, kamu berhasil gabung kelas!');
             }
         }
-
-        return redirect()->back();
+        
+        return redirect()->back()->with('join-lesson-failed', 'Yah, kode kelas tidak ditemukan!');
     }
 }

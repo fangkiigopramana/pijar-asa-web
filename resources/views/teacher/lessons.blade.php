@@ -1,5 +1,12 @@
 @extends('layouts.index')
 @section('container')
+    
+    @if (session()->has('create-lesson-success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ session()->get('create-lesson-success') }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <div class="card shadow border-0 mb-7">
         <div class="card-header">
             <h5 class="mb-0">Data Kelas</h5>
@@ -85,11 +92,12 @@
                             </td>
                             <td>
                                 <p class="text-heading font-semibold">
-                                    {{$lesson->day . ', ' . \Carbon\Carbon::createFromFormat('H:i:s', $lesson->time)->format('H:i')}}
+                                    {{ $lesson->day . ', ' . \Carbon\Carbon::createFromFormat('H:i:s', $lesson->time)->format('H:i') }}
                                 </p>
                             </td>
                             <td>
-                                <a href="{{route('teacher.detail-lesson',[$lesson->id])}}" class="btn btn-sm btn-primary">Detail</a>
+                                <a href="{{ route('teacher.detail-lesson', [$lesson->id]) }}"
+                                    class="btn btn-sm btn-primary">Detail</a>
 
                             </td>
                         </tr>
@@ -99,7 +107,7 @@
             </table>
         </div>
         <div class="card-footer border-0 py-5">
-            <span class="text-muted text-sm">Showing {{count($lessons)}} items found</span>
+            <span class="text-muted text-sm">Showing {{ count($lessons) }} items found</span>
         </div>
     </div>
 @endsection

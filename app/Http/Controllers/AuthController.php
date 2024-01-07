@@ -18,10 +18,10 @@ class AuthController extends Controller
     {
         if (Auth::check()) {
             if (Auth::user()->role === 'pengajar') {
-                return redirect()->route('teacher.dashboard');
+                return redirect()->route('teacher.dashboard')->with('login-success','Login berhasil!');
             }
             if (Auth::user()->role === 'murid') {
-                return redirect()->route('student.dashboard');
+                return redirect()->route('student.dashboard')->with('login-success','Login berhasil!');
             }
         }
         return view('auth.login');
@@ -38,11 +38,11 @@ class AuthController extends Controller
 
             $request->session()->regenerate();
             if(Auth::user()->role === 'pengajar'){
-                return redirect()->route('teacher.dashboard');
+                return redirect()->route('teacher.dashboard')->with('login-success','Login berhasil!');
             }
 
             if(Auth::user()->role === 'murid'){
-                return redirect()->route('student.dashboard');
+                return redirect()->route('student.dashboard')->with('login-success','Login berhasil!');
             }
             return redirect()->route('auth.login');
         }

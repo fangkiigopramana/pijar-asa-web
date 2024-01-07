@@ -1,5 +1,17 @@
 @extends('layouts.index')
 @section('container')
+    @if (session()->has('join-lessons-success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ session()->get('join-lessons-success') }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @elseif (session()->has('join-lessons-failed'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ session()->get('join-lessons-failed') }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <div class="card shadow border-0 mb-7">
         <div class="card-header">
             <h5 class="mb-0">Data Kelas</h5>
@@ -17,24 +29,24 @@
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Kode Kelas</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Kode Kelas</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="{{ route('student.join-lesson') }}">
+                            @csrf
+                            <div class="mb-3">
+                                <label class="form-label">Masukan Kode Kelas</label>
+                                <input type="text" class="form-control" name="code_lesson" placeholder="Misal: ABDFHR">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Cari Kelas</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form method="post" action="{{route('student.join-lesson')}}">
-                        @csrf
-                        <div class="mb-3">
-                          <label class="form-label">Masukan Kode Kelas</label>
-                          <input type="text" class="form-control" name="code_lesson" placeholder="Misal: ABDFHR">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Cari Kelas</button>
-                      </form>
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
         <div class="table-responsive">
             <table class="table table-hover table-nowrap">
                 <thead class="thead-light">
@@ -64,12 +76,13 @@
                             </td>
                             <td>
                                 <p class="text-heading font-semibold">
-                                    {{$lesson->lesson->day . ', ' . \Carbon\Carbon::createFromFormat('H:i:s', $lesson->lesson->time)->format('H:i')}}
+                                    {{ $lesson->lesson->day . ', ' . \Carbon\Carbon::createFromFormat('H:i:s', $lesson->lesson->time)->format('H:i') }}
 
                                 </p>
                             </td>
                             <td>
-                                <a href="{{route('student.lesson',[$lesson->subscribe_id])}}" class="btn btn-sm btn-primary">Detail</a>
+                                <a href="{{ route('student.lesson', [$lesson->subscribe_id]) }}"
+                                    class="btn btn-sm btn-primary">Detail</a>
                             </td>
                         </tr>
                     @endforeach
@@ -78,7 +91,7 @@
             </table>
         </div>
         <div class="card-footer border-0 py-5">
-            <span class="text-muted text-sm">Showing {{count(Auth::user()->lessonSubscribe)}} items found</span>
+            <span class="text-muted text-sm">Showing {{ count(Auth::user()->lessonSubscribe) }} items found</span>
         </div>
     </div>
 @endsection

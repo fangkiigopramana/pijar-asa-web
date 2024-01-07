@@ -1,5 +1,11 @@
 @extends('layouts.index')
 @section('container')
+    @if (session()->has('login-success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ session()->get('login-success') }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <!-- Header -->
     <header class="bg-surface-primary border-bottom pt-6">
         <div class="container-fluid">
@@ -7,7 +13,8 @@
                 <div class="row align-items-center">
                     <div class="col-sm-6 col-12 mb-4 mb-sm-0">
                         <!-- Title -->
-                        <h1 class="h2 mb-0 ls-tight py-3">Hello <span class="text-primary fw-semibold">{{Auth::user()->name}}</span></h1>
+                        <h1 class="h2 mb-0 ls-tight py-3">Hello <span
+                                class="text-primary fw-semibold">{{ Auth::user()->name }}</span></h1>
                     </div>
                 </div>
             </div>
@@ -23,8 +30,9 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <span class="h6 font-semibold text-sm d-block mb-2">{{Auth::user()->name}}</span>
-                                    <span class="h6 font-semibold text-sm d-block mb-2">{{Auth::user()->mata_pelajaran}}</span>
+                                    <span class="h6 font-semibold text-sm d-block mb-2">{{ Auth::user()->name }}</span>
+                                    <span
+                                        class="h6 font-semibold text-sm d-block mb-2">{{ Auth::user()->mata_pelajaran }}</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
@@ -34,7 +42,7 @@
                             </div>
                             <div class="mt-2 mb-0 text-sm">
                                 <span class="badge badge-pill bg-soft-success text-black me-2 fw-bold">
-                                    {{Str::upper(Auth::user()->role)}}
+                                    {{ Str::upper(Auth::user()->role) }}
                                 </span>
                             </div>
                         </div>
@@ -46,7 +54,7 @@
                             <div class="row" style="padding-bottom: 30px">
                                 <div class="col">
                                     <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Murid</span>
-                                    <span class="h3 font-bold mb-0">{{count($students)}} Murid</span>
+                                    <span class="h3 font-bold mb-0">{{ count($students) }} Murid</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-danger text-white text-lg rounded-circle">
@@ -63,7 +71,7 @@
                             <div class="row" style="padding-bottom: 30px">
                                 <div class="col">
                                     <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Kelas Diampu</span>
-                                    <span class="h3 font-bold mb-0">{{count(Auth::user()->lessons)}} Kelas</span>
+                                    <span class="h3 font-bold mb-0">{{ count(Auth::user()->lessons) }} Kelas</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
@@ -80,7 +88,15 @@
                     <h5 class="mb-0">Applications</h5>
                 </div>
                 <div class="card-footer border-0 py-5">
-                    <span class="text-muted text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint necessitatibus dignissimos deleniti hic quia culpa provident illum corrupti, eveniet quod nihil sapiente? Laborum tenetur consequuntur delectus excepturi rem, quasi voluptatem id officia asperiores pariatur, necessitatibus quas minus cum! Hic nesciunt velit inventore veniam totam, architecto molestiae voluptate voluptates expedita corrupti magnam perspiciatis, quisquam, exercitationem voluptatibus commodi nisi est nemo. Consequatur, harum placeat eum quos quasi aperiam doloribus sunt ipsa, ullam facere rerum corporis ipsum quam enim fugit omnis voluptatem molestias voluptate velit ratione sequi quae non accusamus praesentium. Repellat veritatis molestias sunt recusandae vitae mollitia quis? Eius fuga ratione atque?</span>
+                    <span class="text-muted text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint
+                        necessitatibus dignissimos deleniti hic quia culpa provident illum corrupti, eveniet quod nihil
+                        sapiente? Laborum tenetur consequuntur delectus excepturi rem, quasi voluptatem id officia
+                        asperiores pariatur, necessitatibus quas minus cum! Hic nesciunt velit inventore veniam totam,
+                        architecto molestiae voluptate voluptates expedita corrupti magnam perspiciatis, quisquam,
+                        exercitationem voluptatibus commodi nisi est nemo. Consequatur, harum placeat eum quos quasi aperiam
+                        doloribus sunt ipsa, ullam facere rerum corporis ipsum quam enim fugit omnis voluptatem molestias
+                        voluptate velit ratione sequi quae non accusamus praesentium. Repellat veritatis molestias sunt
+                        recusandae vitae mollitia quis? Eius fuga ratione atque?</span>
                 </div>
             </div>
         </div>
